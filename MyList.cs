@@ -1,74 +1,115 @@
-// MyList: an array that manages itself. It tracks the count, grows by
-// doubling when it is full, and refuses any index that is not in use.
-//
-// Part B. Build this class along with the Class 1 demo.
-// Insert is Exercise 2.
+/// <summary>
+/// Represents a generic list that manages its elements in a resizable array.
+/// </summary>
+/// <typeparam name="T">The type of elements stored in the list.</typeparam>
 public class MyList<T>
 {
     private T[] items;
     private int count;
 
-    // Given. Every list starts with room for four items.
     public MyList()
     {
         items = new T[4];
         count = 0;
     }
 
-    // TODO: Part B. How many slots are in use.
-    public int Count => throw new NotImplementedException();
+    public int Count => count;
 
-    // TODO: Part B. How many slots exist (the array's Length).
-    public int Capacity => throw new NotImplementedException();
+    public int Capacity => items.Length;
 
-    // Add to the end. Grow first if every slot is taken.
+    /// <summary>
+    /// Adds an element to the end of the list, increasing capacity if needed.
+    /// </summary>
+    /// <param name="item">The element to add.</param>
     public void Add(T item)
     {
-        // TODO: Part B, demo
-        throw new NotImplementedException();
+        if (count == items.Length)
+        {
+            Grow();
+        }
+
+        items[count] = item;
+        count++;
     }
 
-    // The indexer is the code behind list[2]. Both get and set must
-    // refuse any index that is not in use.
     public T this[int index]
     {
         get
         {
-            // TODO: Part B, demo
-            throw new NotImplementedException();
+            CheckIndex(index);
+            return items[index];
         }
         set
         {
-            // TODO: Part B, demo
-            throw new NotImplementedException();
+            CheckIndex(index);
+            items[index] = value;
         }
     }
 
-    // Insert anywhere from 0 to Count. Inserting at Count is legal and
-    // means the same thing as Add. Throw ArgumentOutOfRangeException
-    // for anything else.
+    /// <summary>
+    /// Inserts an element at the specified index by shifting existing elements to the right.
+    /// </summary>
+    /// <param name="index">The index where the element will be inserted.</param>
+    /// <param name="item">The element to insert.</param>
     public void Insert(int index, T item)
     {
-        // TODO: Part B, Exercise 2
-        throw new NotImplementedException();
+        if (index < 0 || index > count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0 and Count (inclusive).");
+        }
+
+        if (count == items.Length)
+        {
+            Grow();
+        }
+
+        for (int i = count; i > index; i--)
+        {
+            items[i] = items[i - 1];
+        }
+
+        items[index] = item;
+        count++;
     }
 
-    // Remove the item at index and close the gap.
+    /// <summary>
+    /// Removes the element at the specified index by shifting remaining elements to the left.
+    /// </summary>
+    /// <param name="index">The index of the element to remove.</param>
     public void RemoveAt(int index)
     {
-        // TODO: Part B, demo
-        throw new NotImplementedException();
+        CheckIndex(index);
+
+        for (int i = index; i < count - 1; i++)
+        {
+            items[i] = items[i + 1];
+        }
+
+        count--;
     }
 
-    // Linear search. Return the index, or -1 when the item is not there.
-    // Compare with Equals(a, b), which works for every type T.
+    /// <summary>
+    /// Finds the index of the first matching element in the list.
+    /// </summary>
+    /// <param name="item">The element to search for.</param>
+    /// <returns>The index of the first match, or -1 if the element is not found.</returns>
     public int IndexOf(T item)
     {
-        // TODO: Part B, demo
-        throw new NotImplementedException();
+        for (int i = 0; i < count; i++)
+        {
+            if (Equals(items[i], item))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
-    // Given. Builds a line like "[A, B, C]" from the slots in use.
+    /// <summary>
+    /// Returns the list of elements as a formatted comma separated string.
+    /// </summary>
+    /// <returns>A string containing the list elements enclosed in brackets.</returns>
     public override string ToString()
     {
         string result = "[";
@@ -83,8 +124,30 @@ public class MyList<T>
         return result + "]";
     }
 
-    // TODO: Part B. Write two private helpers:
-    //   Grow()            make a new array twice the size, copy every item
-    //   CheckIndex(index) throw ArgumentOutOfRangeException unless
-    //                     0 <= index < count
+    /// <summary>
+    /// Doubles the capacity of the internal array while preserving existing elements.
+    /// </summary>
+    private void Grow()
+    {
+        T[] newItems = new T[items.Length * 2];
+
+        for (int i = 0; i < count; i++)
+        {
+            newItems[i] = items[i];
+        }
+
+        items = newItems;
+    }
+
+    /// <summary>
+    /// Validates that an index is within the occupied portion of the list.
+    /// </summary>
+    /// <param name="index">The index to validate.</param>
+    private void CheckIndex(int index)
+    {
+        if (index < 0 || index >= count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0 and Count - 1.");
+        }
+    }
 }
