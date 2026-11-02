@@ -1,0 +1,93 @@
+=== CSCI 1260 DATA STRUCTURES LAB ===
+
+Part A: array tools
+  Start:                10 20 30 40 50
+  InsertAt(1, 15):      10 15 20 30 40 50
+  IndexOf(40):          4
+  IndexOf(99):          -1
+  RemoveAt(0):          15 20 30 40 50
+  RemoveAt(4):          15 20 30 40
+  Slots in use:         4 of 8
+
+Part B: MyList
+  After 9 adds:         Count 9, Capacity 16
+  After inserts:        [A, B, C, D, E]
+  Count, Capacity:      5, 8
+  RemoveAt(0):          [B, C, D, E]
+  Set [1] to Z:         [B, Z, D, E]
+  IndexOf("D"):         2
+  IndexOf("Q"):         -1
+  letters[4]:           refused
+
+Part C: MyStack
+  Peek:                 C
+  Pop three times:      C B A
+  IsEmpty:              True
+  Pop when empty:       refused
+  Brackets:
+    Console.WriteLine(list[0]);   True
+    { [ ( ) ] }                   True
+    ( [ ) ]                       False
+    ( ( )                         False
+    ( ) )                         False
+
+Part D: MyQueue
+  Dequeue twice:        A B
+  Peek:                 C
+  Count:                5
+  Dequeue all:          C D E F G
+  Dequeue when empty:   refused
+  Office hours, 5 minute turns:
+    Ben done at minute 10
+    Cy done at minute 23
+    Ada done at minute 25
+
+Part E: dictionaries
+  Courses added:        9
+  Add CSCI 1260 again:  False
+  TitleFor(CSCI 1260):  Object Oriented Programming
+  TitleFor(ARTS 1010):  (no such course)
+  Words, most common first:
+    be          2
+    to          2
+    is          1
+    not         1
+    or          1
+    question    1
+    that        1
+    the         1
+  Distinct words:       8
+
+Part F: MyHashTable
+  Count:                5
+  Bucket sizes:         1 2 1 0 1 0 0
+  Find 3305:            Cy
+  Find 9999:            not found
+  Add 2290 again:       refused
+
+Part G: filter and transform
+  Open course codes:    CSCI 1250, CSCI 1260, MATH 1910, MATH 1920, ENGL 1020, HIST 2010, HIST 2020
+  Four credit titles:
+    Introduction to Programming
+    Object Oriented Programming
+    Calculus I
+    Calculus II
+  Seats left:
+    CSCI 1250: 2 seats left
+    CSCI 1260: 2 seats left
+    MATH 1910: 8 seats left
+    MATH 1920: 10 seats left
+    ENGL 1020: 24 seats left
+    HIST 2010: 20 seats left
+    HIST 2020: 36 seats left
+
+Part H: sort, summarize, group
+  Top three:            ENGL 1010 (150), MATH 1910 (112), ENGL 1020 (96)
+  Total enrolled:       703
+  Full courses:         2
+  ByCode[MATH 1910]:    Calculus I
+  Departments:
+    ENGL | courses: 2 | students: 246
+    MATH | courses: 3 | students: 227
+    HIST | courses: 2 | students: 144
+    CSCI | courses: 2 | students: 86
