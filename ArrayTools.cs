@@ -1,36 +1,70 @@
-// ArrayTools: the three algorithms every array based structure is built from.
-// Each method works on a partially filled array: the array holds the room,
-// and count says how many slots are actually in use.
-//
-// Part A. Write IndexOf and InsertAt along with the Class 1 demo.
-// RemoveAt is Exercise 1.
+/// <summary>
+/// Provides methods for searching, inserting, removing, and displaying elements in an array.
+/// </summary>
 public static class ArrayTools
 {
-    // Linear search: check every slot in use until you find the target.
-    // Return the index, or -1 when the target is not there.
+    /// <summary>
+    /// Finds the index of the first matching value in the array.
+    /// </summary>
+    /// <param name="data">The array to search.</param>
+    /// <param name="count">The number of elements currently in use.</param>
+    /// <param name="target">The value to search for.</param>
+    /// <returns>The index of the first matching value, or -1 if not found.</returns>
     public static int IndexOf(int[] data, int count, int target)
     {
-        // TODO: Part A, demo
-        throw new NotImplementedException();
+        for (int i = 0; i < count; i++)
+        {
+            if (data[i] == target)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
-    // Insert: shift right starting from the END, then drop the value
-    // into the gap. Return the new count.
+    /// <summary>
+    /// Inserts a value at the specified index by shifting active elements to the right.
+    /// </summary>
+    /// <param name="data">The array containing the values.</param>
+    /// <param name="count">The number of elements currently in use.</param>
+    /// <param name="index">The index where the value will be inserted.</param>
+    /// <param name="value">The value to insert.</param>
+    /// <returns>The updated number of elements in use.</returns>
     public static int InsertAt(int[] data, int count, int index, int value)
     {
-        // TODO: Part A, demo
-        throw new NotImplementedException();
+        for (int i = count; i > index; i--)
+        {
+            data[i] = data[i - 1];
+        }
+
+        data[index] = value;
+        return count + 1;
     }
 
-    // Remove: shift left starting at the gap. The last slot is no longer
-    // in use, so the count drops by one. Return the new count.
+    /// <summary>
+    /// Removes an element at the specified index by shifting active elements to the left.
+    /// </summary>
+    /// <param name="data">The array containing the values.</param>
+    /// <param name="count">The number of elements currently in use.</param>
+    /// <param name="index">The index of the element to remove.</param>
+    /// <returns>The updated number of elements in use.</returns>
     public static int RemoveAt(int[] data, int count, int index)
     {
-        // TODO: Part A, Exercise 1
-        throw new NotImplementedException();
+        for (int i = index; i < count - 1; i++)
+        {
+            data[i] = data[i + 1];
+        }
+
+        return count - 1;
     }
 
-    // Given. Builds a line like "10 20 30" from the slots in use.
+    /// <summary>
+    /// Returns the active array elements as a space separated string.
+    /// </summary>
+    /// <param name="data">The array containing the values.</param>
+    /// <param name="count">The number of elements currently in use.</param>
+    /// <returns>A formatted string containing the active elements.</returns>
     public static string Show(int[] data, int count)
     {
         string result = "";
