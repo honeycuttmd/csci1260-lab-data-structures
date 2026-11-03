@@ -1,15 +1,17 @@
-// MyHashTable: a tiny dictionary, built to show why lookup takes one step.
-// Each bucket holds a short list of pairs. A key's hash code picks its bucket,
-// so a lookup searches one short list instead of every pair.
-//
-// Part F. Build BucketFor and Add along with the Class 3 demo.
-// TryGetValue is Exercise 6. Do not use Dictionary anywhere in this class.
+/// <summary>
+/// Represents a generic hash table that stores key-value pairs in separate buckets.
+/// </summary>
+/// <typeparam name="TKey">The type of keys stored in the hash table.</typeparam>
+/// <typeparam name="TValue">The type of values associated with the keys.</typeparam>
 public class MyHashTable<TKey, TValue> where TKey : notnull
 {
     private List<KeyValuePair<TKey, TValue>>[] buckets;
     private int count;
 
-    // Given. Makes the buckets, each one an empty list of pairs.
+    /// <summary>
+    /// Initializes a hash table with the specified number of buckets.
+    /// </summary>
+    /// <param name="bucketCount">The number of buckets to create.</param>
     public MyHashTable(int bucketCount)
     {
         buckets = new List<KeyValuePair<TKey, TValue>>[bucketCount];
@@ -20,32 +22,67 @@ public class MyHashTable<TKey, TValue> where TKey : notnull
         count = 0;
     }
 
-    // Given.
     public int Count => count;
 
-    // TODO: Part F, demo. Write one private helper:
-    //   BucketFor(key)  steps 1 and 2: hash the key with GetHashCode, then
-    //                   pick a bucket with %. Wrap it in Math.Abs, because
-    //                   a hash code can be negative.
+    /// <summary>
+    /// Determines which bucket a key belongs to using its hash code.
+    /// </summary>
+    /// <param name="key">The key used to calculate the bucket index.</param>
+    /// <returns>The index of the bucket associated with the key.</returns>
+    private int BucketFor(TKey key)
+    {
+        int hash = key.GetHashCode();
+        return Math.Abs(hash % buckets.Length);
+    }
 
-    // Adds a pair to the key's bucket. Throw ArgumentException when the key
-    // is already in that bucket. Compare keys with Equals(a, b).
+    /// <summary>
+    /// Adds a key-value pair to the appropriate bucket if the key does not already exist.
+    /// </summary>
+    /// <param name="key">The key to add.</param>
+    /// <param name="value">The value associated with the key.</param>
     public void Add(TKey key, TValue value)
     {
-        // TODO: Part F, demo
-        throw new NotImplementedException();
+        int index = BucketFor(key);
+
+        foreach (KeyValuePair<TKey, TValue> pair in buckets[index])
+        {
+            if (Equals(pair.Key, key))
+            {
+                throw new ArgumentException("Key already exists.");
+            }
+        }
+
+        buckets[index].Add(new KeyValuePair<TKey, TValue>(key, value));
+        count++;
     }
 
-    // Step 3: search only the key's own bucket. When the key is there, set
-    // value to its value and return true. When it is not, set value to
-    // default and return false.
+    /// <summary>
+    /// Searches the appropriate bucket for a key and retrieves its associated value.
+    /// </summary>
+    /// <param name="key">The key to search for.</param>
+    /// <param name="value">The value associated with the key, or the default value if not found.</param>
+    /// <returns>True if the key is found; otherwise, false.</returns>
     public bool TryGetValue(TKey key, out TValue? value)
     {
-        // TODO: Part F, Exercise 6
-        throw new NotImplementedException();
+        int index = BucketFor(key);
+
+        foreach (KeyValuePair<TKey, TValue> pair in buckets[index])
+        {
+            if (Equals(pair.Key, key))
+            {
+                value = pair.Value;
+                return true;
+            }
+        }
+
+        value = default;
+        return false;
     }
 
-    // Given. A line like "1 2 1 0 1 0 0": how many pairs sit in each bucket.
+    /// <summary>
+    /// Returns the number of key-value pairs stored in each bucket.
+    /// </summary>
+    /// <returns>A space separated string containing the bucket sizes.</returns>
     public string BucketSizes()
     {
         string result = "";
