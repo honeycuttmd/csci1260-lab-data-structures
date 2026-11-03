@@ -1,27 +1,35 @@
-// CourseCatalog: looks up a course title by its code in one step.
-//
-// Part E. Build this class along with the Class 3 demo.
+/// <summary>
+/// Stores course titles and allows them to be looked up by course code.
+/// </summary>
 public class CourseCatalog
 {
-    // TODO: Part E. Declare one private field: a Dictionary<string, string>
-    // that maps a course code to its title.
+    private Dictionary<string, string> courses = new Dictionary<string, string>();
 
-    // TODO: Part E. How many courses are in the catalog.
-    public int Count => throw new NotImplementedException();
+    public int Count => courses.Count;
 
-    // Adds a course. Returns false, and changes nothing, when the code is
-    // already there. Hint: one of the three ways to write does exactly this.
+    /// <summary>
+    /// Adds a course to the catalog if its code does not already exist.
+    /// </summary>
+    /// <param name="code">The course code.</param>
+    /// <param name="title">The course title.</param>
+    /// <returns>True if the course was added; otherwise, false.</returns>
     public bool AddCourse(string code, string title)
     {
-        // TODO: Part E, demo
-        throw new NotImplementedException();
+        return courses.TryAdd(code, title);
     }
 
-    // Returns the title for a code, or "(no such course)" when the code is
-    // missing. Use TryGetValue, so the code is looked up only once.
+    /// <summary>
+    /// Shows the title associated with a course code.
+    /// </summary>
+    /// <param name="code">The course code to look up.</param>
+    /// <returns>The course title, or a message if the code is not found.</returns>
     public string TitleFor(string code)
     {
-        // TODO: Part E, demo
-        throw new NotImplementedException();
+        if (courses.TryGetValue(code, out string? title))
+        {
+            return title;
+        }
+
+        return "(no such course)";
     }
 }
