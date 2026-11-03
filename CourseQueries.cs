@@ -1,29 +1,45 @@
-// CourseQueries: questions asked of the course list with LINQ.
-//
-// Parts G and H, along with the Class 4 demo. Every method is one query:
-// no for or foreach loops.
+/// <summary>
+/// Provides LINQ queries for filtering, sorting, and summarizing courses.
+/// </summary>
 public static class CourseQueries
 {
-    // Part G, demo: the code of every course with at least one open seat.
+    /// <summary>
+    /// Returns the codes of courses that have at least one available seat.
+    /// </summary>
+    /// <param name="courses">The list of courses to search.</param>
+    /// <returns>A list of course codes with available seats.</returns>
     public static List<string> OpenCourseCodes(List<Course> courses)
     {
-        // TODO: Part G, demo. Where, then Select, then ToList.
-        throw new NotImplementedException();
+        return courses
+            .Where(c => c.SeatsLeft > 0)
+            .Select(c => c.Code)
+            .ToList();
     }
 
-    // Part G, demo: the titles of the four credit courses.
+    /// <summary>
+    /// Finds the titles of courses worth four credit hours.
+    /// </summary>
+    /// <param name="courses">The list of courses to search.</param>
+    /// <returns>A list of four-credit course titles.</returns>
     public static List<string> FourCreditTitles(List<Course> courses)
     {
-        // TODO: Part G, demo
-        throw new NotImplementedException();
+        return courses
+            .Where(c => c.Credits == 4)
+            .Select(c => c.Title)
+            .ToList();
     }
 
-    // Exercise 7: one line per open course, in list order,
-    // like "CSCI 1250: 2 seats left".
+    /// <summary>
+    /// Creates a report showing the available seats for each open course.
+    /// </summary>
+    /// <param name="courses">The list of courses to search.</param>
+    /// <returns>A list of course codes and their available seat counts.</returns>
     public static List<string> SeatsLeftReport(List<Course> courses)
     {
-        // TODO: Part G, Exercise 7
-        throw new NotImplementedException();
+        return courses
+            .Where(c => c.SeatsLeft > 0)
+            .Select(c => $"{c.Code}: {c.SeatsLeft} seats left")
+            .ToList();
     }
 
     // Part H, demo: the three biggest courses, largest first,
